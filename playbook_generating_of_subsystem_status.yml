@@ -1,0 +1,15 @@
+---
+
+- hosts: all
+  gather_facts: no
+  tasks:
+
+  - name: run script which check status of subsystems
+    script: check_status_of_subsystem.sh
+    register: out
+
+  - name: save output from server to subsystem_info.txt file
+    copy:
+      content: "{% for host in groups.all if 'stdout_lines' in  hostvars[host].out %}{{hostvars[host].out.stdout_lines[-1] }}\n{% endfor %}"
+      dest: "subsystems_info.txt"
+    delegate_to: localhost
