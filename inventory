@@ -3,5 +3,4 @@
 [env:vars]
 
 ansible_user=oss
-ansible_password=oss
 
